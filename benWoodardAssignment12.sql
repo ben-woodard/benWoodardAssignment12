@@ -1,7 +1,7 @@
--- create pizza_restaurant schema
+-- Create pizza_restaurant schema
 CREATE SCHEMA `pizza_restaurant`;
 
--- create tables
+-- Create tables
 CREATE TABLE customers  (
 	`customer_id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(150) NOT NULL,
