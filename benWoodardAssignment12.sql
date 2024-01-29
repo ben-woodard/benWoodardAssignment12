@@ -59,14 +59,22 @@ VALUES(1, 'Pepperoni & Cheese'),
 -- Q3	
 SELECT `order_number`, `name`, `phone_number`, `order_date/time`, `pizza_type`, `quantity`
 FROM orders o
-JOIN customers c ON c.customer_id = o.customer_id
+JOIN customers c ON c.`customer_id` = o.`customer_id`
 ORDER BY `order_number`;
 
--- Q4/ Q5
-SELECT `order_number`, `name`, `order_date/time`, SUM(p.price * o.quantity) AS `grand_total`
-FROM orders o
-JOIN customers c ON c.customer_id = o.customer_id
-JOIN orders_pizzas op ON op.order_item_id = o.order_item_id
-JOIN pizzas p ON op.type = p.type
+-- Q4/ 
+SELECT `name`, `order_date/time`, SUM(p.price * o.quantity) AS `grand_total`
+FROM customers c
+JOIN orders o ON c.`customer_id` = o.`customer_id`
+JOIN orders_pizzas op ON op.`order_item_id` = o.`order_item_id`
+JOIN pizzas p ON op.`type` = p.`type`
+GROUP BY `name`;
+
+-- Q5
+SELECT `name`, `order_date/time`, SUM(o.quantity * p.price) AS `grand_total`
+FROM customers c 
+JOIN orders o ON c.`customer_id` = o.`customer_id`
+JOIN orders_pizzas op ON o.`order_item_id` = op.`order_item_id`
+JOIN pizzas p ON p.`type` = op.`type`
 GROUP BY `order_number`
 ORDER BY `order_date/time`;
