@@ -1,6 +1,8 @@
 -- Create pizza_restaurant schema
 CREATE SCHEMA `pizza_restaurant`;
 
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','ONLY_FULL_GROUP_BY'));
+
 -- Create tables
 CREATE TABLE customers  (
 	`customer_id` INT NOT NULL AUTO_INCREMENT,
@@ -68,7 +70,8 @@ FROM customers c
 JOIN orders o ON c.`customer_id` = o.`customer_id`
 JOIN orders_pizzas op ON op.`order_item_id` = o.`order_item_id`
 JOIN pizzas p ON op.`type` = p.`type`
-GROUP BY `name`;
+GROUP BY `name`
+ORDER BY `name` DESC;
 
 -- Q5
 SELECT `name`, `order_date/time`, SUM(o.quantity * p.price) AS `grand_total`
@@ -77,4 +80,4 @@ JOIN orders o ON c.`customer_id` = o.`customer_id`
 JOIN orders_pizzas op ON o.`order_item_id` = op.`order_item_id`
 JOIN pizzas p ON p.`type` = op.`type`
 GROUP BY `order_number`
-ORDER BY `order_date/time`;
+ORDER BY `order_date/time` ASC;
