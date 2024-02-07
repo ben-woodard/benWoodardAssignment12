@@ -71,11 +71,15 @@ JOIN pizzas p ON op.`type` = p.`type`
 GROUP BY `name`
 ORDER BY `name` DESC;
 
+update `orders`
+set `order_date/time` = ('2014-09-10 10:47:00')
+where `order_item_id` = 1;
+
 -- Q5
-SELECT `name`, `order_date/time`, SUM(o.quantity * p.price) AS `customer_date_total`
+SELECT `name`, CAST(`order_date/time` AS date) as `date`, SUM(o.quantity * p.price) AS `customer_date_total`
 FROM customers c 
 JOIN orders o ON c.`customer_id` = o.`customer_id`
 JOIN orders_pizzas op ON o.`order_item_id` = op.`order_item_id`
 JOIN pizzas p ON p.`type` = op.`type`
-GROUP BY `order_date/time`
+GROUP BY `name`, `date` 
 ORDER BY `order_date/time` ASC;
