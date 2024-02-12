@@ -68,7 +68,7 @@ FROM customers c
 JOIN orders o ON c.`customer_id` = o.`customer_id`
 JOIN orders_pizzas op ON op.`order_item_id` = o.`order_item_id`
 JOIN pizzas p ON op.`type` = p.`type`
-GROUP BY `name`
+GROUP BY c.`customer_id`
 ORDER BY `name` DESC;
 
 update `orders`
@@ -81,5 +81,5 @@ FROM customers c
 JOIN orders o ON c.`customer_id` = o.`customer_id`
 JOIN orders_pizzas op ON o.`order_item_id` = op.`order_item_id`
 JOIN pizzas p ON p.`type` = op.`type`
-GROUP BY `name`, `date` 
+GROUP BY c.`customer_id`, `date` 
 ORDER BY `order_date/time` ASC;
